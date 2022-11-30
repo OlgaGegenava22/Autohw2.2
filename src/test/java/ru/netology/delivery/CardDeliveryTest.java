@@ -14,11 +14,6 @@ import static com.codeborne.selenide.Selenide.*;
 import static java.time.Duration.ofSeconds;
 
 public class CardDeliveryTest {
-
-    public String generateDate(int days) {
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
-
     @BeforeEach
     void setup() {
         open("http://localhost:9999/");
@@ -26,45 +21,45 @@ public class CardDeliveryTest {
 
     @Test
     void shouldSendFormWithValidData1() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(4);
-        $("input[placeholder=\"Дата встречи\"]").doubleClick().sendKeys(planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
         $(".button").click();
-        $("[data-test-id=notification] .notification__content").shouldBe(Condition.visible, ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + planningDate));
+        $("[data-test-id=notification] .notification__content").shouldBe(Condition.visible, ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + testData));
     }
 
     @Test
     void shouldSendFormWithValidData2() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(4);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(4).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
         $(".button").click();
-        $("[data-test-id=notification] .notification__content").shouldBe(Condition.visible, ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + planningDate));
+        $("[data-test-id=notification] .notification__content").shouldBe(Condition.visible, ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + testData));
     }
 
     @Test
     void shouldSendFormWithValidData3() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванова-Петрова Анна-Ирина");
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
         $(".button").click();
-        $("[data-test-id=notification] .notification__content").shouldBe(Condition.visible, ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " +planningDate));
+        $("[data-test-id=notification] .notification__content").shouldBe(Condition.visible, ofSeconds(15)).shouldHave(exactText("Встреча успешно забронирована на " + testData));
     }
 
     @Test
     void shouldNotSendFormWithWrongCity() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Бийск");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Пушкин");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
@@ -75,9 +70,9 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithWrongDate() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(1);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
@@ -88,9 +83,9 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithWrongName() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Bdfyjd Bdfy");
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
@@ -101,9 +96,9 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithWrongPhone() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("8911555555555555");
         $("[data-test-id=\"agreement\"]").click();
@@ -114,9 +109,9 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithoutCheckbox() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("8911555555555555");
         $(".button").click();
@@ -126,8 +121,8 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithoutCity() {
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $x("//*[@name=\"phone\"]").setValue("8911555555555555");
         $("[data-test-id=\"agreement\"]").click();
@@ -151,9 +146,9 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithoutName() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"phone\"]").setValue("+79111234567");
         $("[data-test-id=\"agreement\"]").click();
         $(".button").click();
@@ -163,9 +158,9 @@ public class CardDeliveryTest {
 
     @Test
     void shouldNotSendFormWithoutPhone() {
-        $x("//*[@placeholder=\"Город\"]").setValue("Барнаул");
-        String planningDate = generateDate(3);
-        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + planningDate);
+        $x("//*[@placeholder=\"Город\"]").setValue("Санкт-Петербург");
+        String testData = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $x("//*[@placeholder=\"Дата встречи\"]").doubleClick().sendKeys(Keys.DELETE + testData);
         $x("//*[@name=\"name\"]").setValue("Иванов Иван");
         $("[data-test-id=\"agreement\"]").click();
         $(".button").click();
